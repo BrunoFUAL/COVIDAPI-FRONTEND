@@ -96,7 +96,7 @@ newspapers.forEach(newspaper => {
             const html = response.data
             const $ = cheerio.load(html)
 
-            $('a:contains("climate")', html).each(function () {
+            $('a:contains("COVID-19")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
 
