@@ -1,13 +1,10 @@
-const PORT = 8000;
-const axios = require("axios");
-const cheerio = require("cheerio");
-const { attr } = require("cheerio/lib/api/attributes");
-const { response } = require("express");
-const express = require("express");
+const PORT = process.env.PORT || 8000
+const express = require('express')
+const axios = require('axios')
+const cheerio = require('cheerio')
+const app = express()
 
-const app = express();
-
-const news = [
+const newspapers = [
     {
         name: "World Health Organization",
         address:
@@ -91,61 +88,60 @@ const news = [
     },
 ];
 
-const articles = [];
+const articles = []
 
-news.forEach((article) => {
-    axios.get(article.address).then((response) => {
-        const html = response.data;
-        const $ = cheerio.load(html);
+newspapers.forEach(newspaper => {
+    axios.get(newspaper.address)
+        .then(response => {
+            const html = response.data
+            const $ = cheerio.load(html)
 
-        $('a:contains("COVID")', html).each(function () {
-            const title = $(this).text();
-            const url = $(this).attr("href");
+            $('a:contains("climate")', html).each(function () {
+                const title = $(this).text()
+                const url = $(this).attr('href')
 
-            articles.push({
-                title,
-                url: article.base + url,
-                source: article.name,
-            });
-        });
-        res.json(articles);
-    });
-});
+                articles.push({
+                    title,
+                    url: newspaper.base + url,
+                    source: newspaper.name
+                })
+            })
 
-app.get("/", (req, res) => {
-    res.json("Welcome to my Covid-19 News API");
-});
+        }).catch(err => console.log(err))
+})
 
-app.get("/news", (req, res) => {
-    res.json(articles);
-});
+app.get('/', (req, res) => {
+    res.json('Welcome to my Covid-19 World News API')
+})
 
-app.get("/news/:articleId", async (req, res) => {
-    const articleId = req.params.articleId;
+app.get('/news', (req, res) => {
+    res.json(articles)
+})
 
-    const articleAddress = news.filter((article) => article.name == articleId)[0]
-        .address;
-    const articleBase = news.filter((article) => article.name == articleId)[0]
-        .base;
+app.get('/news/:newspaperId', (req, res) => {
+    const newspaperId = req.params.newspaperId
 
-    axios
-        .get(articleAddress)
-        .then((response) => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const specificArticles = [];
+    const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
+    const newspaperBase = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].base
 
-            $('a:contains("COVID")', html).each(function () {
-                const title = $(this).text();
-                const url = $(this).attr("href");
+
+    axios.get(newspaperAddress)
+        .then(response => {
+            const html = response.data
+            const $ = cheerio.load(html)
+            const specificArticles = []
+
+            $('a:contains("climate")', html).each(function () {
+                const title = $(this).text()
+                const url = $(this).attr('href')
                 specificArticles.push({
                     title,
-                    url: articleBase + url,
-                    source: articleId,
-                });
-            });
-            res.json(specificArticles);
-        })
-        .catch((err) => console.log(err));
-});
-app.listen(PORT, () => console.log("server running on PORT", PORT));
+                    url: newspaperBase + url,
+                    source: newspaperId
+                })
+            })
+            res.json(specificArticles)
+        }).catch(err => console.log(err))
+})
+
+app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
