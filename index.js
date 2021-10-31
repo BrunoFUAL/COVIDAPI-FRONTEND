@@ -1,9 +1,15 @@
+// Declaração da Porta a utilizar
 const PORT = process.env.PORT || 8000
+
+// Todos os frameworks utilizados
 const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
+
+// inicializar o framework express
 const app = express()
 
+// criação de uma lista com os diferentes websites de noticias
 const newspapers = [
     {
         name: "Euro News",
@@ -88,8 +94,10 @@ const newspapers = [
     },
 ];
 
+// criação de uma lista com cada um dos artigos
 const articles = []
 
+//  capturar a informação (titulo, url e origem-source) de cada um dos artigos
 newspapers.forEach(newspaper => {
     axios.get(newspaper.address)
         .then(response => {
@@ -117,6 +125,8 @@ app.get('/', (req, res) => {
 app.get('/news', (req, res) => {
     res.json(articles)
 })
+
+// permitir a obtenção da informação numa nova pagina por cada uma das fontes de informação
 
 app.get('/news/:newspaperId', (req, res) => {
     const newspaperId = req.params.newspaperId
