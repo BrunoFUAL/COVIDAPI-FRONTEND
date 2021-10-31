@@ -6,11 +6,11 @@ const app = express()
 
 const newspapers = [
     {
-        name: "World Health Organization",
-        address:
-            "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/media-resources/news",
-        base: "https://www.who.int",
+        name: "Euro News",
+        address: "https://www.euronews.com/next",
+        base: "https://www.euronews.com/",
     },
+
     {
         name: "US News",
         address: "https://www.usnews.com/topics/subjects/coronavirus",
@@ -96,7 +96,7 @@ newspapers.forEach(newspaper => {
             const html = response.data
             const $ = cheerio.load(html)
 
-            $('a:contains("COVID-19")', html).each(function () {
+            $('a:contains("COVID")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
 
@@ -131,7 +131,7 @@ app.get('/news/:newspaperId', (req, res) => {
             const $ = cheerio.load(html)
             const specificArticles = []
 
-            $('a:contains("COVID-19")', html).each(function () {
+            $('a:contains("COVID")', html).each(function () {
                 const title = $(this).text()
                 const url = $(this).attr('href')
                 specificArticles.push({
