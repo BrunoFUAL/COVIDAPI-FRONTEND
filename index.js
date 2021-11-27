@@ -1,6 +1,3 @@
-// Declaração da Porta a utilizar
-const PORT = process.env.PORT || 8000
-
 // Todos os frameworks utilizados
 const express = require('express')
 const axios = require('axios')
