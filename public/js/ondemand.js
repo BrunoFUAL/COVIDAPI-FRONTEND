@@ -29,10 +29,13 @@ async function getArticles() {
                         <div class="flip-card-inner">
                         <div class="flip-card-front">
                         <img src="/images/iconcovid.png" alt="covid" style="width:100%;">
-                        <h3>${article.source}</h3>
-                        <button type="button" class="button-flipped"><a href="${article.url}">Website</a></button></p></div>
+                        <h3>${article.source}</h3></div>
+
                             <div class="flip-card-back">
                             <h8>${article.title}</h8>
+                            <br></br>
+                            <br></br>
+                            <button type="button" class="button-flipped"><a href="${article.url}">Website</a></button></p>
                             
                             </div>
                         </div>
