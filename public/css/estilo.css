@@ -71,23 +71,20 @@
   float: right;
 }
 
+
+
 h1 {
-  background-color: white;
-  color: black;
-  font-weight: bold;
-  font-size: 40px;
-  font-family: Arial;
-  text-transform: uppercase;
-  text-align: center;
-  font-style: italic;
-
-}
-
-h3 {
   background-color:white ;
   color: #3c1b66;
   font-weight: bold;
   font-size: 35px;
   font-family: Arial;
   text-align: center;
+}
+
+.modal-content{
+  background-image: url("/images/Covid-News.jpg");
+  color: white;
+  text-decoration-color: white;
+
 }
