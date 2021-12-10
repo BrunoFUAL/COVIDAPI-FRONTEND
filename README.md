@@ -18,5 +18,7 @@ https://github.com/BrunoFUAL/COVIDAPI-FRONTEND.git
 7 - Efetuar o Login com os dados registados no ponto anterior e será direcionado para a página a partir
 da qual poderá aceder a noticias sobre Covid-19 em 4 linguas diferentes
 
+8 - As noticias surgem no verso de cada um dos cartões, onde é possivel consultar o website origem da noticia.
+
 OBRIGADO
 
